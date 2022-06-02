@@ -31,7 +31,6 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
-
   {
     path: '/login', // 登录页面
     component: () => import('@/views/login/index'),
@@ -49,13 +48,16 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [{ // layout布局页面叫dashboard
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-      // title是面包屑左侧标题, icon是对应位置图标名
-    }]
+    children: [
+      {
+        // layout布局页面叫dashboard
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: '首页', icon: 'dashboard' }
+        // title是面包屑左侧标题, icon是对应位置图标名
+      }
+    ]
   },
 
   {
@@ -155,7 +157,7 @@ export const constantRoutes = [
   },
 
   {
-    path: 'external-link',
+    path: '/external-link',
     component: Layout,
     children: [
       {
@@ -170,11 +172,12 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }), // 路由切换回到最顶端
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }), // 路由切换回到最顶端
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 console.log(router)

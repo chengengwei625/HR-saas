@@ -9,9 +9,9 @@
       <!-- 面包屑具体项
         根据路由等级数组, 循环多少个面包屑链接
        -->
-      <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
+      <el-breadcrumb-item v-for="(item, index) in levelList" :key="item.path">
         <!-- 判断如果没有重定向, 当前是最后一个, 显示这个span, 无点击事件 -->
-        <span v-if="item.redirect==='noRedirect'||index==levelList.length-1" class="no-redirect">{{ item.meta.title }}</span>
+        <span v-if="item.redirect === 'noRedirect' || index == levelList.length - 1" class="no-redirect">{{ item.meta.title }}</span>
         <!-- 如果不是最后一个, 是前面的都是a标签, 点击传递路由对象下去 -->
         <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
       </el-breadcrumb-item>
@@ -30,7 +30,8 @@ export default {
     }
   },
   watch: {
-    $route() { // 检测路由变化-重新计算
+    $route() {
+      // 检测路由变化-重新计算
       this.getBreadcrumb()
     }
   },
@@ -47,8 +48,9 @@ export default {
       let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
       const first = matched[0] // 取出第一个规则对象
 
-      if (!this.isDashboard(first)) { // 如果不是dashboard页面, 则把数组第一个位置设置成, dashboard的路由规则对象, 剩下的拼接在后面
-        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
+      if (!this.isDashboard(first)) {
+        // 如果不是dashboard页面, 则把数组第一个位置设置成, dashboard的路由规则对象, 剩下的拼接在后面
+        matched = [{ path: '/dashboard', meta: { title: '首页' } }].concat(matched)
       }
 
       this.levelList = matched.filter(item => {
@@ -83,7 +85,8 @@ export default {
     // 面包屑a链接的点击事件
     handleLink(item) {
       const { redirect, path } = item // 拿到此链接的重定向属性和路由path
-      if (redirect) { // 如果有重定向, 先去重定向
+      if (redirect) {
+        // 如果有重定向, 先去重定向
         this.$router.push(redirect)
         return
       } // 如果没有重定向, 则跳转到指定path地址
